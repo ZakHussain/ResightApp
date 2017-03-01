@@ -22,12 +22,14 @@ import android.view.*;
 import android.graphics.*;
 import android.widget.*;
 import android.provider.*;
-
+import android.os.AsyncTask;
 
 import com.microsoft.projectoxford.face.FaceServiceClient;
 import com.microsoft.projectoxford.face.FaceServiceRestClient;
 import com.microsoft.projectoxford.face.contract.Face;
 import com.microsoft.projectoxford.face.contract.FaceRectangle;
+
+
 
 import java.io.File;
 import static android.R.attr.tag;
@@ -42,20 +44,25 @@ public class MainActivity extends AppCompatActivity {
     private ProgressDialog detectionProgressDialog;
     private final String TAG = "MyActivity: ";
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //Browse Button logic that opens the sidebar for image selection
+
+        //Browse Button
         Button button1 = (Button) findViewById(R.id.button1);
         //Generate the PersonGroup 'button2'
         Button button2 = (Button) findViewById(R.id.button2);
         //Train Group 'button3'
         Button button3 = (Button) findViewById(R.id.button3);
-        //Train Group 'button4'
+        //identify face
         Button button4 = (Button) findViewById(R.id.button4);
 
-        //the logic for buttons 1 - 4
+
+
+        //the logic for buttons 1 - 4...
+        //opens the sidebar for image selection
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -64,15 +71,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(Intent.createChooser(gallIntent, "Select Picture"), PICK_IMAGE);
             }
         });
-
-        //Generate PersonGroupId
         button2.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "Generate PersonGroupId");
+                grouping(view);
             }
         });
-
         //TrainGroup Button
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -216,4 +220,11 @@ public class MainActivity extends AppCompatActivity {
         }
         return bitmap;
     }
+
+    //move to the GroupingActivity View
+    public void grouping(View view) {
+        Intent intent = new Intent(this, GroupingActivity.class);
+        startActivity(intent);
+    }
 }
+
